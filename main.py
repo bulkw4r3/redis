@@ -1,15 +1,18 @@
-from json import load
 import redis
 import os
+import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
 
-HOST = str(os.getenv('HOST'))
-PORT = str(os.getenv('PORT'))
-PASSWORD = str(os.getenv('PASSWORD'))
+HOST = os.getenv('HOST')
+PORT = os.getenv('PORT')
+PASSWORD = os.getenv('PASSWORD')
 
-r = redis.Redis(host=HOST, port=PORT, password=PASSWORD, db=0)
-r.set('mykey', 'Hello from me and you!')
-value = r.get('mykey') 
-print(value)
+today = datetime.datetime.now()
+stoday = today.isoformat() #convert date to string
+
+r = redis.Redis(host=HOST, port=PORT, password=PASSWORD, db=0, decode_responses=True)
+r.set('mykey', f'Hello from me and you! {stoday}', ex=120) # ex=expire in Sekunden
+value = r.get('mykey') #ohne decode wird b' davorgesetzt
+print(value, type(value))
