@@ -12,7 +12,7 @@ PASSWORD = os.getenv('PASSWORD')
 today = datetime.datetime.now()
 stoday = today.isoformat() #convert date to string
 
-r = redis.Redis(host=HOST, port=PORT, password=PASSWORD, db=0, decode_responses=True)
+r = redis.Redis(host=HOST, port=PORT, password=PASSWORD, db=1, decode_responses=True)
 r.set('mykey', f'Hello from me and you! {stoday}', ex=3600) # ex=expire in Sekunden
-value = r.getdel('mykey') #ohne decode wird b' davorgesetzt
+value = r.get('mykey') #ohne decode wird b' davorgesetzt
 print(value, type(value))
