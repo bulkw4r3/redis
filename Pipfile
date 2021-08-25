@@ -6,8 +6,12 @@ name = "pypi"
 [packages]
 redis = "*"
 python-dotenv = "*"
+types-redis = "*"
 
 [dev-packages]
+mypy = "*"
+flake8 = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.9"
